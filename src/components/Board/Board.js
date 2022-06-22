@@ -7,10 +7,17 @@ import { Button } from "../Button";
 import useTimer from "../../hooks/useTimer";
 import { Timer } from "../Timer";
 import { useDispatch, useSelector } from "react-redux";
-import { createBoardAction, setBoard } from "../../redux/slide/board.slice";
+import {
+  createBoardAction,
+  resetState,
+  setBoard,
+} from "../../redux/slide/board.slice";
+import Loader from "../Loader";
 
 function Board({ level, setScreen }) {
-  const { board, mines, noneMine } = useSelector((state) => state.board);
+  const { board, mines, noneMine, loading } = useSelector(
+    (state) => state.board
+  );
   const dispatch = useDispatch();
   const [showPopup, setShowPopup] = useState(false);
   const ref = useRef(null);
@@ -18,6 +25,9 @@ function Board({ level, setScreen }) {
 
   useEffect(() => {
     dispatch(createBoardAction(level));
+    return () => {
+      dispatch(resetState());
+    };
   }, []);
 
   const updateFlag = (e, x, y) => {
@@ -108,6 +118,7 @@ function Board({ level, setScreen }) {
         })}
       </div>
       {renderPopup()}
+      {loading && <Loader />}
     </BoardStyled>
   );
 }
