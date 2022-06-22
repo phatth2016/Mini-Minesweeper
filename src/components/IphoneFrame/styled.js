@@ -100,8 +100,8 @@ export const Styled = styled.div`
     content: attr(data-front);
   }
   .iphoneMock .container .iphone {
-    width: 320px;
-    height: 640px;
+    width: 358px;
+    height: 700px;
     border-radius: 45px;
     position: relative;
     user-select: none;

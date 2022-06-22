@@ -73,13 +73,10 @@ function Board({ level, setScreen }) {
 
   const renderPopup = () => {
     if (showPopup) {
-      let content = "";
-      if (nonMinecount === 0) content = "You Win!";
-      content = "You Lose!";
       const timer = ref.current.value;
       return (
         <Popup closePopup={handlePlayAgain}>
-          <h2>{content}</h2>
+          <h2>{nonMinecount === 0 ? "You Win!" : "You Lose!"}</h2>
           <div>{timer}</div>
           <Button className="btn" onClick={() => setShowPopup(false)}>
             Show result

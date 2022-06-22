@@ -53,7 +53,7 @@ const useTimer = (ref) => {
 
   const handleReset = () => {
     setIsActive(false);
-    ref.current.value = 0;
+    ref.current.value = "00 : 00 : 00";
   };
   return { handleStart, handlePauseResume, handleReset };
 };
