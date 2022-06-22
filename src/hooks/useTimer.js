@@ -42,7 +42,7 @@ const useTimer = (ref) => {
     };
   }, [isActive, isPaused]);
 
-  const handleStart = () => {
+  const handleStartTime = () => {
     setIsActive(true);
     setIsPaused(false);
   };
@@ -51,11 +51,11 @@ const useTimer = (ref) => {
     setIsPaused(!isPaused);
   };
 
-  const handleReset = () => {
+  const handleResetTime = () => {
     setIsActive(false);
     ref.current.value = "00 : 00 : 00";
   };
-  return { handleStart, handlePauseResume, handleReset };
+  return { handleStartTime, handlePauseResume, handleResetTime };
 };
 
 export default useTimer;

@@ -26,5 +26,9 @@ export const BoardStyled = styled.div`
   width: 100%;
   .grid {
     width: 100%;
+    .row {
+      display: flex;
+      width: 100%;
+    }
   }
 `;

@@ -27,7 +27,7 @@ const PopupStyled = styled.div`
     background: #fff;
     border-radius: 6px;
     z-index: 1;
-    background: rgb(255 255 255 / 83%);
+    background: #ffffff00;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

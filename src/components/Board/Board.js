@@ -1,56 +1,51 @@
 import React, { useState, useEffect, useRef } from "react";
 import revealed from "../../helpers/Reviealed";
-import createBoard from "../../helpers/CreateBoard";
 import Cell from "../Cell";
 import { BoardStyled, Point } from "./styled";
 import Popup from "../Popup";
 import { Button } from "../Button";
 import useTimer from "../../hooks/useTimer";
 import { Timer } from "../Timer";
+import { useDispatch, useSelector } from "react-redux";
+import { createBoardAction, setBoard } from "../../redux/slide/board.slice";
 
 function Board({ level, setScreen }) {
-  const [grid, setGrid] = useState([]);
-  const [nonMinecount, setNonMinecount] = useState(0);
-  const [mineLocation, setmineLocation] = useState([]);
+  const { board, mines, noneMine } = useSelector((state) => state.board);
+  const dispatch = useDispatch();
   const [showPopup, setShowPopup] = useState(false);
-  const { size } = level;
-
   const ref = useRef(null);
+  const { handleStartTime, handlePauseResume, handleResetTime } = useTimer(ref);
 
-  const { handleStart, handlePauseResume, handleReset } = useTimer(ref);
   useEffect(() => {
-    const initBoard = () => {
-      createBoard(level).then((res) => {
-        setNonMinecount(size * size - res.minesLocation.length);
-        setmineLocation(res.minesLocation);
-        setGrid(res.board);
-      });
-    };
-    initBoard();
+    dispatch(createBoardAction(level));
   }, []);
 
   const updateFlag = (e, x, y) => {
     e.preventDefault();
-    let newGrid = JSON.parse(JSON.stringify(grid));
-    newGrid[x][y].flagged = true;
-    setGrid(newGrid);
+    let newBoard = JSON.parse(JSON.stringify(board));
+    newBoard[x][y].flagged = true;
+    dispatch(setBoard({ board: newBoard }));
   };
+
   //revealing all cells and the minelocation with all mines when clicked on mines
   const revealcell = (x, y) => {
-    handleStart();
-    let newGrid = JSON.parse(JSON.stringify(grid));
-    if (newGrid[x][y].value === "X") {
+    handleStartTime();
+    let newBoard = JSON.parse(JSON.stringify(board));
+    if (newBoard[x][y].value === "X") {
       setShowPopup(true);
       handlePauseResume();
-      //baät heât caùc traùi mìn leân thaønh true
-      for (let i = 0; i < mineLocation.length; i++) {
-        newGrid[mineLocation[i].x][mineLocation[i].y].revealed = true;
+      for (let i = 0; i < mines.length; i++) {
+        newBoard[mines[i].x][mines[i].y].revealed = true;
       }
-      setGrid(newGrid);
+      dispatch(setBoard({ board: newBoard }));
     } else {
-      let revealedboard = revealed(newGrid, x, y, nonMinecount);
-      setGrid(revealedboard.arr);
-      setNonMinecount(revealedboard.newNonMines);
+      let revealedboard = revealed(newBoard, x, y, noneMine);
+      dispatch(
+        setBoard({
+          board: revealedboard.arr,
+          noneMine: revealedboard.newNonMines,
+        })
+      );
       if (revealedboard.newNonMines === 0) {
         handlePauseResume();
         setShowPopup(true);
@@ -59,30 +54,26 @@ function Board({ level, setScreen }) {
   };
 
   const handlePlayAgain = () => {
-    // setScreen("HOME");
     setShowPopup(false);
-    handleReset();
-    createBoard(level).then((res) => {
-      setNonMinecount(size * size - res.minesLocation.length);
-      setmineLocation(res.minesLocation);
-      setGrid(res.board);
-    });
+    handleResetTime();
+    dispatch(createBoardAction(level));
   };
-
-  console.log("render");
 
   const renderPopup = () => {
     if (showPopup) {
       const timer = ref.current.value;
       return (
         <Popup closePopup={handlePlayAgain}>
-          <h2>{nonMinecount === 0 ? "You Win!" : "You Lose!"}</h2>
+          <h2>{noneMine === 0 ? "You Win!" : "You Lose!"}</h2>
           <div>{timer}</div>
           <Button className="btn" onClick={() => setShowPopup(false)}>
             Show result
           </Button>
           <Button className="btn" onClick={handlePlayAgain}>
             Play again!
+          </Button>
+          <Button className="btn" onClick={() => setScreen("HOME")}>
+            Home
           </Button>
         </Popup>
       );
@@ -92,21 +83,15 @@ function Board({ level, setScreen }) {
 
   return (
     <BoardStyled>
-      <Point>Non-Mines: {nonMinecount}</Point>
+      <Point>Mini Minesweeper</Point>
       <Timer ref={ref} defaultValue="00 : 00 : 00" />
       <div className="btn-back" onClick={() => setScreen("HOME")}>
         Back
       </div>
       <div className="grid">
-        {grid.map((singlerow, index1) => {
+        {board.map((singlerow, index1) => {
           return (
-            <div
-              style={{
-                display: "flex",
-                width: "100%",
-              }}
-              key={index1}
-            >
+            <div className="row" key={index1}>
               {singlerow.map((singlecol, index2) => {
                 return (
                   <Cell

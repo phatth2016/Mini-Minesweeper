@@ -2,9 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Cell({ details, updateFlag, revealcell, size }) {
-  const width = document.getElementsByClassName("mainScreen").clientWidth;
-  console.log("width: ", width);
-
   const renderValue = () => {
     if (details.revealed) {
       if (details.value === "X") {
