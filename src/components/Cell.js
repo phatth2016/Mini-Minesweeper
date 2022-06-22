@@ -1,12 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Cell({ details, updateFlag, revealcell }) {
-  const renderValue = (value) => {
-    if (value === "X") {
-      return "💣";
+export default function Cell({ details, updateFlag, revealcell, size }) {
+  const renderValue = () => {
+    if (details.revealed) {
+      if (details.value === "X") {
+        return "💣";
+      }
+      return details.value;
     }
-    return value;
+    if (details.flagged) {
+      return "🇻🇳";
+    }
+    return "";
   };
 
   return (
@@ -15,15 +21,16 @@ export default function Cell({ details, updateFlag, revealcell }) {
         revealcell(details.x, details.y);
       }}
       onContextMenu={(e) => updateFlag(e, details.x, details.y)}
+      size={size}
     >
-      {details.revealed ? renderValue(details.value) : ""}
+      {renderValue()}
     </CellStyled>
   );
 }
 
 const CellStyled = styled.div`
-  width: 25px;
-  height: 25px;
+  width: ${(props) => (props.size ? `calc(100% / ${props.size})` : "25px")};
+  height: 28px;
   background-color: #000;
   border: 1px solid white;
   display: flex;

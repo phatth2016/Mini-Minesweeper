@@ -1,85 +1,6 @@
 import styled from "styled-components";
 
-import React from "react";
-
-export default function Iphone(props) {
-  return (
-    <Styled>
-      {" "}
-      <section className="iphoneMock">
-        <div className="container">
-          <div className="iphone arrhe">
-            <div className="bordeColor">
-              <div className="botones">
-                <div className="switch"></div>
-                <div className="vol up"></div>
-                <div className="vol down"></div>
-                <div className="touchID"></div>
-              </div>
-              <div className="backSide">
-                <div className="camaras">
-                  <div className="cam">
-                    <div className="lente"></div>
-                  </div>
-                  <div className="cam">
-                    <div className="lente"></div>
-                  </div>
-                  <div className="cam">
-                    <div className="lente"></div>
-                  </div>
-                  <div className="flash"></div>
-                  <div className="sensor"></div>
-                </div>
-                <div className="logo"></div>
-              </div>
-              <div className="bordeNegro">
-                <div className="notch">
-                  <div className="bocina"></div>
-                  <div className="camara"></div>
-                </div>
-                <div className="logo"></div>
-                <div className="mainScreen blur">
-                  <div className="statusBar">
-                    <div className="leftSide">
-                      <div className="operador hidden">Telcel</div>
-                      <div className="hora">08:56</div>
-                      <div className="widgetPlus"></div>
-                    </div>
-                    <div className="rightSide">
-                      <div className="signal mid">
-                        <i className="bar"></i>
-                      </div>
-                      <div className="datos">5G</div>
-                      <div className="bateria low"></div>
-                      <div className="exitShake">Listo</div>
-                    </div>
-                  </div>
-                  <div className="lockScreen hidden">
-                    <div className="up">
-                      <div className="lockIcon"></div>
-                      <div className="hora">08:56</div>
-                      <div className="fecha">Sábado, 27 de Febrero</div>
-                    </div>
-                    <div className="down">
-                      <div className="sysIcon camara"></div>
-                    </div>
-                    <div
-                      className="unlockBar"
-                      data-msj="Desliza hacia arriba para desbloquear"
-                    ></div>
-                  </div>
-                  {props.children}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </Styled>
-  );
-}
-
-const Styled = styled.div`
+export const Styled = styled.div`
   @keyframes relojAnalogico {
     to {
       transform: rotate(360deg);
@@ -119,10 +40,6 @@ const Styled = styled.div`
     align-items: center;
     justify-content: center;
     align-content: center;
-    /* position: absolute;
-    right: 60px;
-    top: 20px;
-    z-index: 100; */
   }
   .iphoneMock .container {
     display: flex;
@@ -144,40 +61,7 @@ const Styled = styled.div`
     opacity: 0;
     transform: translateY(-10px);
   }
-  .iphoneMock .container .interactionInfo > * {
-    margin-bottom: 10px;
-    transition: ease all 0.5s;
-  }
-  .iphoneMock .container .interactionInfo > *:nth-child(1) {
-    transition-delay: 0.1s;
-  }
-  .iphoneMock .container .interactionInfo > *:nth-child(2) {
-    transition-delay: 0.2s;
-  }
-  .iphoneMock .container .interactionInfo > *:nth-child(3) {
-    transition-delay: 0.3s;
-  }
-  .iphoneMock .container .interactionInfo > *:nth-child(4) {
-    transition-delay: 0.4s;
-  }
-  .iphoneMock .container .interactionInfo > *:nth-child(5) {
-    transition-delay: 0.5s;
-  }
-  .iphoneMock .container .interactionInfo > *:nth-child(6) {
-    transition-delay: 0.6s;
-  }
-  .iphoneMock .container .interactionInfo > *:nth-child(7) {
-    transition-delay: 0.7s;
-  }
-  .iphoneMock .container .interactionInfo > *:nth-child(8) {
-    transition-delay: 0.8s;
-  }
-  .iphoneMock .container .interactionInfo > *:nth-child(9) {
-    transition-delay: 0.9s;
-  }
-  .iphoneMock .container .interactionInfo > *:nth-child(10) {
-    transition-delay: 1s;
-  }
+
   .iphoneMock .container .interactionInfo h1 {
     font-size: 30px;
     margin-bottom: 20px;
@@ -665,6 +549,7 @@ const Styled = styled.div`
     position: relative;
     overflow: hidden;
     transition: ease all 1s;
+    position: relative;
   }
   .iphoneMock .container .iphone .bordeColor .bordeNegro .mainScreen.bloqueado {
     opacity: 0;
