@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Cell({ details, updateFlag, revealcell, size }) {
+  const width = document.getElementsByClassName("mainScreen").clientWidth;
+  console.log("width: ", width);
+
   const renderValue = () => {
     if (details.revealed) {
       if (details.value === "X") {
@@ -30,13 +33,14 @@ export default function Cell({ details, updateFlag, revealcell, size }) {
 
 const CellStyled = styled.div`
   width: ${(props) => (props.size ? `calc(100% / ${props.size})` : "25px")};
-  height: 28px;
+  height: ${(props) => (props.size === 9 ? "45px" : "25px")};
+
   background-color: #000;
   border: 1px solid white;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   color: #fff;
 `;
