@@ -76,9 +76,9 @@ function Board({ level, setScreen }) {
         <Popup closePopup={handlePlayAgain}>
           <h2>{noneMine === 0 ? "You Win!" : "You Lose!"}</h2>
           <div>{timer}</div>
-          <Button className="btn" onClick={() => setShowPopup(false)}>
+          {/* <Button className="btn" onClick={() => setShowPopup(false)}>
             Show result
-          </Button>
+          </Button> */}
           <Button className="btn" onClick={handlePlayAgain}>
             Play again!
           </Button>

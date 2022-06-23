@@ -7,6 +7,9 @@ export default function Cell({ details, updateFlag, revealcell, size }) {
       if (details.value === "X") {
         return "💣";
       }
+      if (details.value === 0) {
+        return "";
+      }
       return details.value;
     }
     if (details.flagged) {
@@ -22,6 +25,7 @@ export default function Cell({ details, updateFlag, revealcell, size }) {
       }}
       onContextMenu={(e) => updateFlag(e, details.x, details.y)}
       size={size}
+      details={details}
     >
       {renderValue()}
     </CellStyled>
@@ -32,7 +36,9 @@ const CellStyled = styled.div`
   width: ${(props) => (props.size ? `calc(100% / ${props.size})` : "25px")};
   height: ${(props) => (props.size === 9 ? "45px" : "25px")};
 
-  background-color: #000;
+  background-color: ${(props) =>
+    props.details.value === 0 && props.details.revealed ? "#cccccc63" : "#000"};
+
   border: 1px solid white;
   display: flex;
   justify-content: center;
